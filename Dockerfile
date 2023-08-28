@@ -1,7 +1,6 @@
-FROM node:16-alpine3.16 as build
+FROM node:14.17.3 as build
 WORKDIR /app
-COPY ./package* .json/
-
+COPY ./package*.json ./
 RUN npm ci
 
 COPY . .
