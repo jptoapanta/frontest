@@ -1,13 +1,20 @@
 FROM node:14.17.3 as build
+
 WORKDIR /app
-COPY package*.json ./
 
-RUN npm ci
+COPY package*.json .
+RUN npm install
 
-COPY ./ ./
+COPY . .
 RUN npm run build
 
-FROM nginx:1.23.0-alpine
-EXPOSE 8080
-COPY nginx.conf /etc/nginx/nginx.conf
+# ----------------------------
+# run with nginx
+# ----------------------------
+FROM nginx
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
 COPY --from=build /app/dist/fuse /usr/share/nginx/html
+
+EXPOSE 80
