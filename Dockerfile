@@ -8,5 +8,5 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/dist/ngcloudrundemo /usr/share/nginx/html/
-COPY --from=build /source/nginx.conf /etc/nginx/conf.d/
+#COPY --from=build /source/nginx.conf /etc/nginx/conf.d/
 EXPOSE 8080
