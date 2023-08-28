@@ -4,9 +4,9 @@ COPY ./package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build
+RUN npm run build –prod
 
-FROM nginx:1.23.0-alpine
+FROM nginx:alpine
+COPY –from=build /source/dist/application /usr/share/nginx/html/
+COPY –from=build /source/nginx.conf /etc/nginx/conf.d/
 EXPOSE 8080
-COPY nginx.conf /etc/nginx/nginx.conf
-#COPY --from=build /app/dist/frontest /usr/share/nginx/html
